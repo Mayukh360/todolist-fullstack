@@ -112,3 +112,12 @@
   .dataButtonPrimary{
     background-color: rgb(90, 113, 227);
   }
+
+  .navigate{
+    padding: 5px 10px;
+    font-size: 15px;
+    background-color: #dc37de;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }

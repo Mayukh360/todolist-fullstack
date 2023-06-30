@@ -86,10 +86,9 @@ export default function Completed() {
   };
 
  
-  const fetchFunc = async () => {
-    const response = await axios.get("/api/completedtask");
-    console.log(response);
-  };
+  const navigateHandler=()=>{
+    router.push('/completedtask')
+  }
 
   const deleteHandler = async (id) => {
     try {
@@ -146,7 +145,7 @@ export default function Completed() {
         </ul>
       )}
 
-      <button onClick={fetchFunc}>See completed Task</button>
+      <button className={styles.navigate} onClick={navigateHandler}>See completed Task</button>
     </div>
   )
 }
