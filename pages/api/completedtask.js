@@ -58,7 +58,7 @@ export default async function handler(req, res) {
       res.status(500).json({ message: "Request failed" });
     }
   } else if (req.method === "DELETE") {
-    // console.log(req);
+    console.log(req);
     try {
       const { id } = req.query;
     console.log("DELETE", id);

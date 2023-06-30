@@ -96,17 +96,17 @@ export default function Home() {
   };
 
   const deleteHandler = async (id) => {
-    // try {
-    //   const response = await axios.delete(`/api/completedtask?id=${id}`);
-    //   console.log(response.data);
-    //   if (response.status === 200) {
-    //     fetchData();
-    //   } else {
-    //     console.log("Error:", response.status);
-    //   }
-    // } catch (error) {
-    //   console.log("Error:", error.message);
-    // }
+    try {
+      const response = await axios.delete(`/api/completedtask?id=${id}`);
+      console.log(response.data);
+      if (response.status === 200) {
+        fetchData();
+      } else {
+        console.log("Error:", response.status);
+      }
+    } catch (error) {
+      console.log("Error:", error.message);
+    }
   };
 
   const editbtnhandler = (id) => {
