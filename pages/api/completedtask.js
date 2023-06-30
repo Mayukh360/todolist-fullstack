@@ -58,9 +58,10 @@ export default async function handler(req, res) {
       res.status(500).json({ message: "Request failed" });
     }
   } else if (req.method === "DELETE") {
+    // console.log(req);
     try {
       const { id } = req.query;
-      console.log("DELETE", id);
+    console.log("DELETE", id);
 
       const client = await MongoClient.connect(
         "mongodb+srv://mkc360:m.c.605551@cluster0.mxwuzmm.mongodb.net/todolist?retryWrites=true&w=majority"

@@ -6,6 +6,7 @@ import axios from "axios";
 export default function Home() {
   const [data, setData] = useState([]);
   const todoRef = useRef();
+  const [editingItemId, setEditingItemId] = useState(null);
   const router = useRouter();
   const fetchData = async () => {
     try {
@@ -29,13 +30,22 @@ export default function Home() {
     };
 
     try {
-      const response = await axios.post("/api/completedtask", inputData);
-      console.log(response.data)
-      if (response.status === 201) {
-       fetchData();
+      if (editingItemId) {
+        // Perform PUT request for editing an item
+        const response = await axios.put ("/api/completedtask", {
+          id: editingItemId,
+          data: inputData,
+        });
+        console.log("Item updated successfully:", response.data);
+        setEditingItemId(null); // Clear the editingItemId
       } else {
-        console.log("Error:", response.status);
+        // Perform POST request for adding a new item
+        const response = await axios.post("/api/completedtask", inputData);
+        console.log(response.data);
       }
+
+      fetchData();
+      todoRef.current.value = ""; // Clear the input field
     } catch (error) {
       console.log("Error:", error.message);
     }
@@ -86,18 +96,29 @@ export default function Home() {
   };
 
   const deleteHandler = async (id) => {
-    try {
-      const response = await axios.delete(`/api/completedtask/`,id);
-      console.log(response.data);
-      if (response.status === 200) {
-        fetchData();
-      } else {
-        console.log("Error:", response.status);
-      }
-    } catch (error) {
-      console.log("Error:", error.message);
+    // try {
+    //   const response = await axios.delete(`/api/completedtask?id=${id}`);
+    //   console.log(response.data);
+    //   if (response.status === 200) {
+    //     fetchData();
+    //   } else {
+    //     console.log("Error:", response.status);
+    //   }
+    // } catch (error) {
+    //   console.log("Error:", error.message);
+    // }
+  };
+
+  const editbtnhandler = (id) => {
+    const selectedItem = data.find((item) => item._id === id);
+    if (selectedItem) {
+      todoRef.current.value = selectedItem.todo;
+      setEditingItemId(id);
     }
   };
+  
+  
+  
 
   return (
     <>
@@ -106,7 +127,7 @@ export default function Home() {
         <form onSubmit={submitHandler}>
           <label>Enter Todo </label>
           <input type="text" ref={todoRef} />
-          <button type="submit">Add Todo</button>
+          <button type="submit">{editingItemId?'Update Todo':'Add Todo'}</button>
         </form>
       </div>
       {data.length > 0 && (
@@ -119,6 +140,8 @@ export default function Home() {
                 onChange={() => handleCheckboxChange(item._id)}
               />
               <span>{item.todo}</span>
+              
+              <button onClick={() => editbtnhandler(item._id)} >Edit</button>
               <button onClick={() => deleteHandler(item._id)}>Delete</button>
             </li>
           ))}
