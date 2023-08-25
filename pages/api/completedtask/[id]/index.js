@@ -3,11 +3,11 @@ import { ObjectId } from "mongodb";
 
 export default async function handler(req, res) {
     if (req.method === "PUT") {
-        console.log(req)
+        // console.log(req)
         try {
           const { id} = req.query;
         const {data}= req.body;
-        //   console.log("PUT", data, id);
+          console.log("PUT", data, id);
     
           const client = await MongoClient.connect(
             "mongodb+srv://mkc360:m.c.605551@cluster0.mxwuzmm.mongodb.net/todolist?retryWrites=true&w=majority"

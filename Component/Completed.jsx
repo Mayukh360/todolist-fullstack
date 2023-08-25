@@ -63,14 +63,14 @@ export default function Completed() {
         return item;
       });
       setData(updatedData);
-
+  
       const updatedItem = updatedData.find((item) => item._id === id);
-
+  
       const response = await axios.put("/api/completedtask", {
-        id: id,
+        id: id.toString(), // Convert id to string before passing it
         data: updatedItem,
       });
-
+  
       if (response.status === 200) {
         console.log("Item updated successfully:", response.data);
       } else {
@@ -80,6 +80,7 @@ export default function Completed() {
       console.log("Error:", error.message);
     }
   };
+  
 
   const navigateHandler = () => {
     router.push("/completedtask");
