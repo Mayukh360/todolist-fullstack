@@ -44,7 +44,8 @@ export default async function handler(req, res) {
 
       const meetupsCollection = db.collection("todolist");
 
-      const objectId = ObjectId(id); // Convert the id string to ObjectId
+      const objectId = new ObjectId(id); // Convert the id string to ObjectId
+
 
       const result = await meetupsCollection.updateOne(
         { _id: objectId }, // Find the document by its ObjectId
