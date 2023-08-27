@@ -5,6 +5,7 @@ import axios from "axios";
 import styles from "./Completed.module.css";
 
 export default function Completed() {
+  const userId= localStorage.getItem("userId")
   const [data, setData] = useState([]);
   const todoRef = useRef();
   const [editingItemId, setEditingItemId] = useState(null);
@@ -27,6 +28,7 @@ export default function Completed() {
     const inputData = {
       todo: todoRef.current.value,
       isCompleted: true,
+      userId: userId,
     };
 
     try {

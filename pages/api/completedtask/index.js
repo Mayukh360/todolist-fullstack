@@ -5,25 +5,39 @@ import { ObjectId } from "mongodb";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const data = req.body;
+    const userId = data.userId; // Extract userId from the request payload
     console.log(data);
+    
+    // You can validate the userId here if needed
+    
     const client = await MongoClient.connect(
       "mongodb+srv://mkc360:m.c.605551@cluster0.mxwuzmm.mongodb.net/todolist?retryWrites=true&w=majority"
     );
     const db = client.db();
 
     const meetupsCollection = db.collection("todolist");
-    const result = await meetupsCollection.insertOne(data);
+    
+    // Add userId to the data before inserting
+    const taskData = {
+      ...data,
+      userId: userId,
+    };
+    
+    const result = await meetupsCollection.insertOne(taskData);
     console.log(result);
     client.close();
     res.status(201).json({ message: "Request successful" });
-  } else if (req.method === "GET") {
+  }else   if (req.method === "GET") {
     try {
+       // Get userId from query parameter
       const client = await MongoClient.connect(
         "mongodb+srv://mkc360:m.c.605551@cluster0.mxwuzmm.mongodb.net/todolist?retryWrites=true&w=majority"
       );
       const db = client.db();
 
       const meetupsCollection = db.collection("todolist");
+      
+      // Filter tasks based on userId
       const result = await meetupsCollection.find().toArray();
 
       client.close();
@@ -32,7 +46,8 @@ export default async function handler(req, res) {
       console.log("Error:", error);
       res.status(500).json({ message: "Request failed" });
     }
-  } else  if (req.method === "PUT") {
+  }
+ else  if (req.method === "PUT") {
     const { id, data } = req.body;
     console.log("DATA", id, data);
 

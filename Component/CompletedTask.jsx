@@ -10,7 +10,7 @@ export default function CompletedTask() {
   const fetchData = async () => {
     try {
       const response = await axios.get("/api/completedtask");
-      // console.log(response.data);
+      console.log("COMPLETEDTASK",response.data);
       setData(response.data.filter((item)=> !item.isCompleted));
     } catch (error) {
       console.log("Error:", error.message);
@@ -22,7 +22,7 @@ export default function CompletedTask() {
   }, []);
 
   const navigateHandler=()=>{
-    router.push('/')
+    router.push('/todolist')
   }
   return (
     <div className={classes.container}>
