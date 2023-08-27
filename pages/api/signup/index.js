@@ -14,6 +14,15 @@ export default async function handler(req, res) {
     const db = client.db();
     const usersCollection = db.collection("users");
 
+    // Check if the provided email already exists in the database
+    const existingUser = await usersCollection.findOne({ email: data.email });
+
+    if (existingUser) {
+      res.status(409).json({ message: "Email already exists" });
+      client.close();
+      return;
+    }
+
     if (data.password) {
       // Hash the password before saving
       const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -31,7 +40,7 @@ export default async function handler(req, res) {
       // Generate a JWT token for the user
       const token = jwt.sign({ userId: result.insertedId }, "abcdxyztrsdgpjslyytfdcbf");
 
-      res.status(201).json({ message: "User created", token, userId: user._id });
+      res.status(201).json({ message: "User created", token, userId: result.insertedId });
     } 
 
     client.close();
