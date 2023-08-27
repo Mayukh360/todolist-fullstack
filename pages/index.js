@@ -1,9 +1,10 @@
-import Completed from "@/Component/Completed";
+
+import LoginForm from "@/Component/LoginForm";
 
 export default function Home() {
   return (
     <>
-      <Completed />
+      <LoginForm/>
     </>
   );
 }
