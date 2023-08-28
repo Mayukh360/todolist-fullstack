@@ -1,4 +1,4 @@
-//This Is Backend Code
+
 import { MongoClient } from "mongodb";
 import { ObjectId } from "mongodb";
 
@@ -6,10 +6,10 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     const data = req.body;
     console.log(data);
-    const userId = data.userId; // Extract userId from the request payload
+    const userId = data.userId; 
     console.log(data);
     
-    // You can validate the userId here if needed
+   
     
     const client = await MongoClient.connect(
       "mongodb+srv://mkc360:m.c.605551@cluster0.mxwuzmm.mongodb.net/todolist?retryWrites=true&w=majority"
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
     const meetupsCollection = db.collection("todolist");
     
-    // Add userId to the data before inserting
+    
     const taskData = {
       ...data,
       userId: userId,
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     res.status(201).json({ message: "Request successful" });
   }else   if (req.method === "GET") {
     try {
-       // Get userId from query parameter
+       
       const client = await MongoClient.connect(
         "mongodb+srv://mkc360:m.c.605551@cluster0.mxwuzmm.mongodb.net/todolist?retryWrites=true&w=majority"
       );
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
 
       const meetupsCollection = db.collection("todolist");
       
-      // Filter tasks based on userId
+      
       const result = await meetupsCollection.find().toArray();
 
       client.close();
@@ -71,7 +71,7 @@ export default async function handler(req, res) {
       client.close();
 
       if (result.matchedCount === 0) {
-        // No document matched the provided id
+       
         return res.status(404).json({ message: "Task not found" });
       }
 

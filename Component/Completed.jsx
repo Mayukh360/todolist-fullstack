@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import styles from "./Completed.module.css";
+import Navbar from "./Navbar";
 
 export default function Completed() {
- 
   const [data, setData] = useState([]);
   const todoRef = useRef();
   const [editingItemId, setEditingItemId] = useState(null);
@@ -28,16 +28,17 @@ export default function Completed() {
     const inputData = {
       todo: todoRef.current.value,
       isCompleted: true,
-      
     };
 
     try {
       if (editingItemId) {
         // Perform PUT request for editing an item
-        const response = await axios.put(`/api/completedtask/${editingItemId}`, {
-          
-          data: inputData,
-        });
+        const response = await axios.put(
+          `/api/completedtask/${editingItemId}`,
+          {
+            data: inputData,
+          }
+        );
         console.log("Item updated successfully:", response.data);
         setEditingItemId(null); // Clear the editingItemId
       } else {
@@ -65,14 +66,14 @@ export default function Completed() {
         return item;
       });
       setData(updatedData);
-  
+
       const updatedItem = updatedData.find((item) => item._id === id);
-  
+
       const response = await axios.put("/api/completedtask", {
         id: id.toString(), // Convert id to string before passing it
         data: updatedItem,
       });
-  
+
       if (response.status === 200) {
         console.log("Item updated successfully:", response.data);
       } else {
@@ -82,7 +83,6 @@ export default function Completed() {
       console.log("Error:", error.message);
     }
   };
-  
 
   const navigateHandler = () => {
     router.push("/completedtask");
@@ -110,6 +110,8 @@ export default function Completed() {
     }
   };
   return (
+    <>
+    
     <div className={styles.container}>
       <h1 className={styles.title}>Todo List</h1>
       <div>
@@ -155,5 +157,6 @@ export default function Completed() {
         See completed Task
       </button>
     </div>
+    </>
   );
 }

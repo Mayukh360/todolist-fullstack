@@ -1,0 +1,18 @@
+.navbarContainer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    max-width: 100%;
+    
+    
+  }
+  
+  .logoutButton {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  
