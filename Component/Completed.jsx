@@ -28,7 +28,7 @@ export default function Completed() {
     const inputData = {
       todo: todoRef.current.value,
       isCompleted: true,
-      userId: userId,
+      
     };
 
     try {
